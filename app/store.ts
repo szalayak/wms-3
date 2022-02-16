@@ -3,15 +3,15 @@ import {
   ThunkAction,
   Action
 } from '@reduxjs/toolkit'
-import { AppState, rootReducer } from './features'
+import { AppState, appReducer } from './features'
 import thunk from 'redux-thunk'
-import { createGQLClient, GraphQLClient } from './apollo-client'
+import { createGQLClient } from './apollo-client'
 
 const apolloMiddleware = thunk.withExtraArgument({ client: createGQLClient() })
 
 export function makeStore() {
   return configureStore({
-    reducer: rootReducer,
+    reducer: appReducer,
     middleware: defaults => [
       ...defaults({ thunk: { extraArgument: createGQLClient() } }),
       apolloMiddleware,

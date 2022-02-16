@@ -2,10 +2,8 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useAppDispatch } from '../app'
 import { linkThunks, selectLinks } from '../app/features'
 import AppBar from '../components/AppBar/AppBar'
-
 const Home: NextPage = () => {
 
   const links = useSelector(selectLinks);

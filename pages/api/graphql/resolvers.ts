@@ -1,4 +1,4 @@
-const links: Link[] = [
+export const links: Link[] = [
   {
     category: 'Open Source',
     description: 'Fullstack React framework',
