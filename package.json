@@ -8,6 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@apollo/client": "^3.5.9",
     "@heroicons/react": "^1.0.5",
     "@reduxjs/toolkit": "^1.7.2",
     "apollo-server-micro": "^3.6.3",
