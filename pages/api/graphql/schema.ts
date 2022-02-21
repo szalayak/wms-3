@@ -3,18 +3,18 @@
 import { gql } from 'apollo-server-micro'
 
 export const typeDefs = gql`
-  type Link {
-    id: String
-    title: String
-    description: String
-    url: String
-    category: String
-    imageUrl: String
-    users: [String]
+
+  scalar DateTime
+
+  type Warehouse {
+    id: ID!
+    name: String!
+    createdAt: DateTime
+    updatedAt: DateTime
   }
 
   type Query {
-    links: [Link]!
-    link(id: String!): Link
+    warehouses: [Warehouse]!
+    warehouse(id: String!): Warehouse
   }
 `

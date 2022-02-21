@@ -2,10 +2,11 @@ import { ApolloServer } from 'apollo-server-micro'
 import { typeDefs } from './schema'
 import { resolvers } from './resolvers'
 import Cors from 'micro-cors'
+import { createContext } from './context'
 
 const cors = Cors()
 
-const apolloServer = new ApolloServer({ typeDefs, resolvers })
+const apolloServer = new ApolloServer({ typeDefs, resolvers, context: createContext })
 
 const startServer = apolloServer.start()
 

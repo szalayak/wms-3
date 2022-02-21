@@ -1,37 +1,35 @@
-export const links: Link[] = [
-  {
-    category: 'Open Source',
-    description: 'Fullstack React framework',
-    id: '8a9020b2-363b-4a4f-ad26-d6d55b51bqes',
-    imageUrl: 'https://nextjs.org/static/twitter-cards/home.jpg',
-    title: 'Next.js',
-    url: 'https://nextjs.org',
-  },
-  {
-    category: 'Open Source',
-    description: 'Next Generation ORM for TypeScript and JavaScript',
-    id: '2a3121b2-363b-4a4f-ad26-d6c35b41bade',
-    imageUrl: 'https://www.prisma.io/images/og-image.png',
-    title: 'Prisma',
-    url: 'https://prisma.io',
-  },
-  {
-    category: 'Open Source',
-    description: 'GraphQL implementation',
-    id: '2ea8cfb0-44a3-4c07-bdc2-31ffa135ea78',
-    imageUrl: 'https://www.apollographql.com/apollo-home.jpg',
-    title: 'Apollo GraphQL',
-    url: 'https://apollographql.com',
-  },
-]
+import { PrismaClient } from '@prisma/client'
+import { GraphQLScalarType, Kind } from 'graphql'
+
+interface Context {
+  prisma: PrismaClient
+  [key: string]: unknown
+}
+
+const dateTimeScalar = new GraphQLScalarType({
+  name: 'DateTime',
+  description: "Date/Time",
+  serialize: value => (value as Date).toISOString(),
+  parseValue: value => new Date(value as number | string),
+  parseLiteral: ast => ast.kind === Kind.INT ? new Date(parseInt(ast.value, 10)) : null
+})
 
 export const resolvers = {
+  DateTime: dateTimeScalar,
   Query: {
-    links: (): Link[] => {
-      return links
+    warehouses: async (
+      _parent: unknown,
+      _args: unknown,
+      { prisma }: Context
+    ): Promise<Warehouse[]> => {
+      return prisma.warehouse.findMany()
     },
-    link: (_parent: unknown, { id }: Partial<Link>): Link | undefined => {
-      return links.find(l => l.id === id)
+    warehouse: async (
+      _parent: unknown,
+      { id }: Partial<Warehouse>,
+      { prisma }: Context
+    ): Promise<Warehouse | null> => {
+      return prisma.warehouse.findUnique({ where: { id } })
     },
   },
 }

@@ -1,10 +1,12 @@
-import { combineReducers } from "@reduxjs/toolkit";
-import { linksReducer } from "./links/slice";
+import { combineReducers } from '@reduxjs/toolkit'
+import { appReducer } from './app'
+import { warehousesReducer } from './warehouses'
 
-export const appReducer = combineReducers({
-    linksState: linksReducer
-});
+export const rootReducer = combineReducers({
+  warehousesState: warehousesReducer,
+  appState: appReducer,
+})
 
-export type AppState = ReturnType<typeof appReducer>
+export type RootState = ReturnType<typeof rootReducer>
 
-export * from './links';
+export * from './warehouses'
